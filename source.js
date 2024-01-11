@@ -15,13 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
             desenhando = false; // Para de desenhar
         }
     });
+
+
     fundo.addEventListener('mousedown', function(event) {
         // Verifica se o botão esquerdo do mouse foi pressionado
         if (event.button === 0 && !iniciado) {
             iniciado = true; // Começa a desenhar
             circuloCentral.style.transition = 'transform 0.3s ease-out';
             circuloCentral.style.transform = 'scale(0.5)';
-            
+            var pontos = document.createElement('div');
+            pontos.classList.add('pontos');
+            pontos.classList.add('naoSelecionavel');
+            pontos.innerHTML = '0'
+            fundo.appendChild(pontos);
+
         }
     });
 
@@ -31,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Cria um elemento de linha
             var trail = document.createElement('div');
             trail.classList.add('trail');
-
+            console.log()
             // Define a posição inicial da linha
             trail.style.position = 'absolute';
             trail.style.left = event.clientX + 'px';
