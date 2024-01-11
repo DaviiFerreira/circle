@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     var fundo = document.getElementById('fundo');
-    var tam = fundo.clientHeight;
+    var tamH = fundo.clientHeight/2;
+    var tamW = fundo.clientWidth/2;
     fundo.addEventListener('mousemove', function(event) {
         
-        console.log('Mouse move event:', event.clientX - tam);
-
+        console.log('Mouse move event Y:', event.clientY );
+        console.log('Mouse move event X:', event.clientX );
         // Cria um elemento de linha
         var trail = document.createElement('div');
         trail.classList.add('trail');
