@@ -28,9 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
             circuloCentral.style.transition = 'transform 0.3s ease-out';
             circuloCentral.style.transform = 'scale(0.5)';
             var pontos = document.createElement('div');
+            pontos.id = "pontos";
             pontos.classList.add('pontos');
             pontos.classList.add('naoSelecionavel');
-            pontos.innerHTML = '0'
+            pontos.innerHTML = '100.00'
             fundo.appendChild(pontos);
 
         }
@@ -46,6 +47,27 @@ document.addEventListener('DOMContentLoaded', function() {
             if (posicoesMouse.length > 100) {
                 posicoesMouse.shift(); // Remove a posição mais antiga se houver mais de 100
             }
+            var mediadez= 0;
+            var mediaTodas = 0;
+            var qtd = 0;
+            for(var i=0; i<posicoesMouse.length; i++){
+                if(i<10){
+                    mediadez+=posicoesMouse[i];
+                    qtd++;
+                }
+                mediaTodas+= posicoesMouse[i];
+            }
+            var pontos= document.getElementById('pontos');
+            mediadez = mediadez/qtd;
+            mediaTodas = mediaTodas/posicoesMouse.length;
+            var pontosAtuais =  pontos.innerHTML;
+            if((mediadez-mediaTodas)<0){
+                pontos.innerHTML = parseFloat(pontosAtuais) + ((mediadez-mediaTodas)/500);
+            }
+            if((mediadez-mediaTodas)>0){
+                pontos.innerHTML =  parseFloat(pontosAtuais)  - ((mediadez-mediaTodas)/500);
+            }
+           
             console.log("posx, posy, meiox, meioy", event.clientX, event.clientY, xmeio, ymeio)
             console.log(posicoesMouse);
             // Define a posição inicial da linha
