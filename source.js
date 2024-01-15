@@ -126,8 +126,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 dezEmDez = 0;
                 console.log("POSSEG SETADO");
             }
+            if(event.clientX< xmeio+10 && quadrante == 2){
+                quadrante =    2.5;
+            }
+            if(event.clientX< xmeio-10 && quadrante == 2.5){
+                quadrante =    3;
+            }
+            if(event.clientY> ymeio-10 && quadrante == 1 ){
+                quadrante =    1.5 ;
+            }
+            if(event.clientY> ymeio+10 && quadrante == 1.5){
+                quadrante =    2 ;
+            }
             if(horario){
-                if (quadrante == 1 && (event.clientX < xSeg || event.clientY < ySeg) && posSeg == false  ){
+                if (quadrante == 1 && (event.clientX+10 < xSeg|| event.clientY +10< ySeg) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                }
+                if (quadrante == 2 && (event.clientX > xSeg+10 || event.clientY+10 < ySeg) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                }
+                if (quadrante == 3 && (event.clientX > xSeg +10|| event.clientY > ySeg+10) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
                 }
