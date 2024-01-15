@@ -126,19 +126,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 dezEmDez = 0;
                 console.log("POSSEG SETADO");
             }
-            if(event.clientX< xmeio+10 && quadrante == 2){
-                quadrante =    2.5;
-            }
-            if(event.clientX< xmeio-10 && quadrante == 2.5){
-                quadrante =    3;
-            }
-            if(event.clientY> ymeio-10 && quadrante == 1 ){
-                quadrante =    1.5 ;
-            }
-            if(event.clientY> ymeio+10 && quadrante == 1.5){
-                quadrante =    2 ;
-            }
+           
             if(horario){
+                if(event.clientY< ymeio-10 && quadrante == 3 ){
+                    quadrante =    3.5 ;
+                }
+                if(event.clientY< ymeio+10 && quadrante == 3.5){
+                    quadrante =    4 ;
+                }
+                if(event.clientX< xmeio+10 && quadrante == 2){
+                    quadrante =    2.5;
+                }
+                if(event.clientX< xmeio-10 && quadrante == 2.5){
+                    quadrante =    3;
+                }
+                if(event.clientY> ymeio-10 && quadrante == 1 ){
+                    quadrante =    1.5 ;
+                }
+                if(event.clientY> ymeio+10 && quadrante == 1.5){
+                    quadrante =    2 ;
+                }
                 if (quadrante == 1 && (event.clientX+10 < xSeg|| event.clientY +10< ySeg) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
@@ -151,8 +158,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
                 }
+                if (quadrante == 4 && (event.clientX+10 < xSeg|| event.clientY > ySeg+10) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                }
             }
-            if(estoura>250){
+            if(estoura>400){
                 pontos.innerHTML = "demorou muito ";
                 desenhando = false;
             }
