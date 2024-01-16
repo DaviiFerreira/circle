@@ -43,12 +43,22 @@ document.addEventListener('DOMContentLoaded', function() {
                
                 estoura=0;
             }
+            if( pontos.innerHTML[0] == 'M'   ){
+                pontos.innerHTML  = '100.00';
+                posInit = true; 
+                posSeg = true;
+                while(posicoesMouse.length){
+                    posicoesMouse.shift();
+                }
+               
+                estoura=0;
+            }
            
            // posInit = true;
         }
     });
 
-    fundo.addEventListener('mouseup', function(event) {a
+    fundo.addEventListener('mouseup', function(event) {
         // Verifica se o botão esquerdo do mouse foi solto
         if (event.button === 0 && iniciado) {
             desenhando = false; // Para de desenhar
@@ -126,12 +136,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("POSSEG SETADO HORARIO ");
                 }
             }
-           
+            
             
             var pontos= document.getElementById('pontos');
             mediadez = mediadez/qtd;
             mediaTodas = mediaTodas/posicoesMouse.length;
             var pontosAtuais =  pontos.innerHTML;
+           
             if((mediadez-mediaTodas)<0){
                 pontos.innerHTML = (parseFloat(pontosAtuais) + ((mediadez-mediaTodas)/250)).toFixed(2);
             }
@@ -199,8 +210,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     titulo.style.transform = 'scale(1)';
                 }
             }
-            if(estoura>400){
+            if(estoura>750){
                 pontos.innerHTML = "demorou muito ";
+                desenhando = false;
+                titulo.style.transition = 'transform 0.3s ease-in';
+                titulo.style.transform = 'scale(1)';
+            }
+            if(posicoesMouse[posicoesMouse.length - 1] < 200 ){
+                pontos.innerHTML = "Muito perto ";
                 desenhando = false;
                 titulo.style.transition = 'transform 0.3s ease-in';
                 titulo.style.transform = 'scale(1)';
