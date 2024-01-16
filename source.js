@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var quadrante = 0;
     var dezEmDez = 0;
     var titulo = document.getElementById('titulo');
+    var divh = document.getElementById('div1');
+    var divah = document.getElementById('div2');
+    var sentido = "horario"
     fundo.addEventListener('mousedown', function(event) {
         // Verifica se o botão esquerdo do mouse foi pressionado
         if (event.button === 0 && iniciado) {
@@ -31,6 +34,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     posicoesMouse.shift();
                 }
                 estoura=0;
+                horario = 0;
+                if(event.clientX<xmeio){
+                    sentido = "antihorario"
+                    horario = -1;
+                    
+                }
+                if(event.clientX>=xmeio){
+                    sentido = "horario"
+                    horario = 1;
+                    
+                }
+                console.log("aquii", event.clientX)
+                titulo.innerHTML =  " Clique Para Iniciar!<br /> desenhe no sentido "+ sentido;
+                var pontos = document.createElement('div');
+                titulo.style.transition = 'transform 0.3s ease-in';
+                titulo.style.transform = 'scale(1)';
+                divh.style.transition = 'transform 0.3s ease-out';
+                divh.style.transform = 'scale(0)';
+                divah.style.transition = 'transform 0.3s ease-out';
+                divah.style.transform = 'scale(0)';
                 
             }
             if( pontos.innerHTML[0] == 'd'   ){
@@ -42,6 +65,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                
                 estoura=0;
+                horario = 0;
+                if(event.clientX<xmeio){
+                    sentido = "antihorario"
+                    horario = -1;
+                    
+                }
+                if(event.clientX>=xmeio){
+                    sentido = "horario"
+                    horario = 1;
+                    
+                }
+                console.log("aquii", event.clientX)
+                titulo.innerHTML =  " Clique Para Iniciar!<br /> desenhe no sentido "+ sentido;
+                var pontos = document.createElement('div');
+                titulo.style.transition = 'transform 0.3s ease-in';
+                titulo.style.transform = 'scale(1)';
+                divh.style.transition = 'transform 0.3s ease-out';
+                divh.style.transform = 'scale(0)';
+                divah.style.transition = 'transform 0.3s ease-out';
+                divah.style.transform = 'scale(0)';
             }
             if( pontos.innerHTML[0] == 'M'   ){
                 pontos.innerHTML  = '100.00';
@@ -52,6 +95,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                
                 estoura=0;
+                horario = 0;
+                if(event.clientX<xmeio){
+                    sentido = "antihorario"
+                    horario = -1;
+                    
+                }
+                if(event.clientX>=xmeio){
+                    sentido = "horario"
+                    horario = 1;
+                    
+                }
+                console.log("aquii", event.clientX)
+                titulo.innerHTML =  " Clique Para Iniciar!<br /> desenhe no sentido "+ sentido;
+                var pontos = document.createElement('div');
+                titulo.style.transition = 'transform 0.3s ease-in';
+                titulo.style.transform = 'scale(1)';
+                divh.style.transition = 'transform 0.3s ease-out';
+                divh.style.transform = 'scale(0)';
+                divah.style.transition = 'transform 0.3s ease-out';
+                divah.style.transform = 'scale(0)';
             }
            
            // posInit = true;
@@ -72,8 +135,25 @@ document.addEventListener('DOMContentLoaded', function() {
             iniciado = true; // Começa a desenhar
             circuloCentral.style.transition = 'transform 0.3s ease-out';
             circuloCentral.style.transform = 'scale(0.5)';
-            titulo.style.transition = 'transform 0.3s ease-out';
-            titulo.style.transform = 'scale(0)';
+           
+            divh.style.transition = 'transform 0.3s ease-out';
+            divh.style.transform = 'scale(0)';
+            divah.style.transition = 'transform 0.3s ease-out';
+            divah.style.transform = 'scale(0)';
+
+
+            if(event.clientX<xmeio){
+                sentido = "antihorario"
+                horario = -1;
+                
+            }
+            if(event.clientX>=xmeio){
+                sentido = "horario"
+                horario = 1;
+                
+            }
+            console.log("aquii", event.clientX)
+            titulo.innerHTML = "desenhe no sentido " + sentido;
             var pontos = document.createElement('div');
             pontos.id = "pontos";
             pontos.classList.add('pontos');
@@ -110,32 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 mediaTodas+= posicoesMouse[i];
             }
-            if(posicoesMouse.length>=10 && posSeg){
-                xSeg=event.clientX;
-                ySeg = event.clientY;
-                posSeg = false;
-                console.log("POSSEG SETADO");
-                if (posSeg == false && xSeg>xInicial && ySeg>yInicial){
-                    horario = 1;
-                    quadrante = 1 ;
-                    console.log("POSSEG SETADO HORARIO ");
-                }
-                if (posSeg == false && xSeg<xInicial && ySeg>yInicial){
-                    horario = 1;
-                    quadrante = 2 ;
-                    console.log("POSSEG SETADO HORARIO ");
-                }
-                if (posSeg == false && xSeg<xInicial && ySeg<yInicial){
-                    horario = 1;
-                    quadrante = 3 ;
-                    console.log("POSSEG SETADO HORARIO ");
-                }
-                if (posSeg == false && xSeg>xInicial && ySeg<yInicial){
-                    horario = 1;
-                    quadrante = 4 ;
-                    console.log("POSSEG SETADO HORARIO ");
-                }
-            }
+            
             
             
             var pontos= document.getElementById('pontos');
@@ -153,8 +208,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if( distDoInit<40 && posicoesMouse.length>98){
                 pontos.innerHTML = "sua pontuação final foi " + (parseFloat(pontos.innerHTML)).toFixed(2);
                 desenhando = false;
-                titulo.style.transition = 'transform 0.3s ease-in';
-                titulo.style.transform = 'scale(1)';
+                titulo.style.transition = 'transform 0.3s ease-out';
+                titulo.style.transform = 'scale(0)';
+                divh.style.transition = 'transform 0.3s ease-in';
+                divh.style.transform = 'scale(1)';
+                divah.style.transition = 'transform 0.3s ease-in';
+                divah.style.transform = 'scale(1)';
             }
             if(posicoesMouse.length>=10 && dezEmDez>=10){
                 xSeg=event.clientX;
@@ -163,7 +222,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("POSSEG SETADO");
             }
            
-            if(horario){
+            if(horario == 1 ){
+                if(posicoesMouse.length>=10 && posSeg){
+                    xSeg=event.clientX;
+                    ySeg = event.clientY;
+                    posSeg = false;
+                    console.log("POSSEG SETADO");
+                    if (posSeg == false && xSeg>xInicial && ySeg>yInicial){
+                        quadrante = 1 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                    if (posSeg == false && xSeg<xInicial && ySeg>yInicial){
+                        quadrante = 2 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                    if (posSeg == false && xSeg<xInicial && ySeg<yInicial){
+                        quadrante = 3 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                    if (posSeg == false && xSeg>xInicial && ySeg<yInicial){
+                        quadrante = 4 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                }
                 if(event.clientY< ymeio-10 && quadrante == 3 ){
                     quadrante =    3.5 ;
                 }
@@ -171,6 +252,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     quadrante =    4 ;
                 }
                 if(event.clientX> xmeio-10 && quadrante == 4){
+                    quadrante =   4.5;
+                }
+
+                if(event.clientX> xmeio+10 && quadrante == 4.5){
                     quadrante =   1;
                 }
                 if(event.clientX< xmeio+10 && quadrante == 2){
@@ -185,29 +270,133 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(event.clientY> ymeio+10 && quadrante == 1.5){
                     quadrante =    2 ;
                 }
-                if (quadrante == 1 && (event.clientX+10 < xSeg|| event.clientY +10< ySeg) && posSeg == false  ){
+                if (quadrante == 1 && (event.clientX+25 < xSeg|| event.clientY +25< ySeg) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
                     titulo.style.transition = 'transform 0.3s ease-in';
                     titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
                 }
-                if (quadrante == 2 && (event.clientX > xSeg+10 || event.clientY+10 < ySeg) && posSeg == false  ){
+                if (quadrante == 2 && (event.clientX > xSeg+25 || event.clientY+25 < ySeg) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
                     titulo.style.transition = 'transform 0.3s ease-in';
                     titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
                 }
-                if (quadrante == 3 && (event.clientX > xSeg +10|| event.clientY > ySeg+10) && posSeg == false  ){
+                if (quadrante == 3 && (event.clientX > xSeg +25|| event.clientY > ySeg+25) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
                     titulo.style.transition = 'transform 0.3s ease-in';
                     titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
                 }
-                if (quadrante == 4 && (event.clientX+10 < xSeg|| event.clientY > ySeg+10) && posSeg == false  ){
+                if (quadrante == 4 && (event.clientX+25 < xSeg|| event.clientY > ySeg+25) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
                     titulo.style.transition = 'transform 0.3s ease-in';
                     titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
+                }
+            }
+            if(horario == -1 ){
+                if(posicoesMouse.length>=10 && posSeg){
+                    xSeg=event.clientX;
+                    ySeg = event.clientY;
+                    posSeg = false;
+                    console.log("POSSEG SETADO");
+                    if (posSeg == false && xSeg<xInicial && ySeg>yInicial){
+                        quadrante = 1 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                    if (posSeg == false && xSeg>xInicial && ySeg>yInicial){
+                        quadrante = 2 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                    if (posSeg == false && xSeg>xInicial && ySeg<yInicial){
+                        quadrante = 3 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                    if (posSeg == false && xSeg<xInicial && ySeg<yInicial){
+                        quadrante = 4 ;
+                        console.log("POSSEG SETADO HORARIO ");
+                    }
+                }
+                if(event.clientY< ymeio+10 && quadrante == 3 ){
+                    quadrante =    3.5 ;
+                }
+                if(event.clientY> ymeio-10 && quadrante == 3.5){
+                    quadrante =    4 ;
+                }
+                if(event.clientX< xmeio+10 && quadrante == 4){
+                    quadrante =   4.5;
+                }
+                if(event.clientX< xmeio-10 && quadrante == 4.5){
+                    quadrante =   1;
+                }
+                if(event.clientX> xmeio-10 && quadrante == 2){
+                    quadrante =    2.5;
+                }
+                if(event.clientX> xmeio+10 && quadrante == 2.5){
+                    quadrante =    3;
+                }
+                if(event.clientY> ymeio-10 && quadrante == 1 ){
+                    quadrante =    1.5 ;
+                }
+                if(event.clientY> ymeio+10 && quadrante == 1.5){
+                    quadrante =    2 ;
+                }
+                if (quadrante == 1 && (event.clientX  > xSeg +25|| event.clientY +25< ySeg) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                    titulo.style.transition = 'transform 0.3s ease-in';
+                    titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
+                }
+                if (quadrante == 2 && (event.clientX+25 < xSeg || event.clientY  +25< ySeg ) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                    titulo.style.transition = 'transform 0.3s ease-in';
+                    titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
+                }
+                if (quadrante == 3 && (event.clientX+25 < xSeg || event.clientY > ySeg+25) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                    titulo.style.transition = 'transform 0.3s ease-in';
+                    titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
+                }
+                if (quadrante == 4 && (event.clientX > xSeg+25|| event.clientY > ySeg+25) && posSeg == false  ){
+                    pontos.innerHTML = "direção errada ";
+                    desenhando = false;
+                    titulo.style.transition = 'transform 0.3s ease-in';
+                    titulo.style.transform = 'scale(1)';
+                    divh.style.transition = 'transform 0.3s ease-in';
+                    divh.style.transform = 'scale(1)';
+                    divah.style.transition = 'transform 0.3s ease-in';
+                    divah.style.transform = 'scale(1)';
                 }
             }
             if(estoura>750){
@@ -215,12 +404,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 desenhando = false;
                 titulo.style.transition = 'transform 0.3s ease-in';
                 titulo.style.transform = 'scale(1)';
+                divh.style.transition = 'transform 0.3s ease-in';
+                divh.style.transform = 'scale(1)';
+                divah.style.transition = 'transform 0.3s ease-in';
+                divah.style.transform = 'scale(1)';
             }
             if(posicoesMouse[posicoesMouse.length - 1] < 200 ){
                 pontos.innerHTML = "Muito perto ";
                 desenhando = false;
                 titulo.style.transition = 'transform 0.3s ease-in';
                 titulo.style.transform = 'scale(1)';
+                divh.style.transition = 'transform 0.3s ease-in';
+                divh.style.transform = 'scale(1)';
+                divah.style.transition = 'transform 0.3s ease-in';
+                divah.style.transform = 'scale(1)';
             }
             console.log("posx, posy, meiox, meioy", event.clientX, event.clientY, xmeio, ymeio)
             console.log(posicoesMouse);
