@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var divh = document.getElementById('div1');
     var divah = document.getElementById('div2');
     var sentido = "horario"
+    var quadranteInit = 0;
+    var saiuDoInit = 0;
     fundo.addEventListener('mousedown', function(event) {
         // Verifica se o botão esquerdo do mouse foi pressionado
         if (event.button === 0 && iniciado) {
@@ -26,10 +28,42 @@ document.addEventListener('DOMContentLoaded', function() {
             titulo.style.transform = 'scale(0)';
             desenhando = true; // Começa a desenhar
             var pontos= document.getElementById('pontos');
+            if( pontos.innerHTML[0] == 'T'   ){
+                pontos.innerHTML  = '100.00';
+                posInit = true; 
+                posSeg = true;
+                saiuDoInit = 0;
+                while(posicoesMouse.length){
+                    posicoesMouse.shift();
+                }
+                estoura=0;
+                horario = 0;
+                if(event.clientX<xmeio){
+                    sentido = "antihorario"
+                    horario = -1;
+                    
+                }
+                if(event.clientX>=xmeio){
+                    sentido = "horario"
+                    horario = 1;
+                    
+                }
+                console.log("aquii", event.clientX)
+                titulo.innerHTML =  " Clique Para Iniciar!<br /> desenhe no sentido "+ sentido;
+                var pontos = document.createElement('div');
+                titulo.style.transition = 'transform 0.3s ease-in';
+                titulo.style.transform = 'scale(1)';
+                divh.style.transition = 'transform 0.3s ease-out';
+                divh.style.transform = 'scale(0)';
+                divah.style.transition = 'transform 0.3s ease-out';
+                divah.style.transform = 'scale(0)';
+                
+            }
             if( pontos.innerHTML[0] == 's'   ){
                 pontos.innerHTML  = '100.00';
                 posInit = true; 
                 posSeg = true;
+                saiuDoInit = 0;
                 while(posicoesMouse.length){
                     posicoesMouse.shift();
                 }
@@ -60,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML  = '100.00';
                 posInit = true; 
                 posSeg = true;
+                saiuDoInit = 0;
                 while(posicoesMouse.length){
                     posicoesMouse.shift();
                 }
@@ -95,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                
                 estoura=0;
+                saiuDoInit = 0;
                 horario = 0;
                 if(event.clientX<xmeio){
                     sentido = "antihorario"
@@ -197,6 +233,17 @@ document.addEventListener('DOMContentLoaded', function() {
             mediadez = mediadez/qtd;
             mediaTodas = mediaTodas/posicoesMouse.length;
             var pontosAtuais =  pontos.innerHTML;
+            if (pontosAtuais<35){
+                pontos.innerHTML = "TEM CERTEZA QUE ISSO É UM CIRCULO?";
+                desenhando = false;
+                titulo.style.transition = 'transform 0.3s ease-out';
+                titulo.style.transform = 'scale(0)';
+                divh.style.transition = 'transform 0.3s ease-in';
+                divh.style.transform = 'scale(1)';
+                divah.style.transition = 'transform 0.3s ease-in';
+                divah.style.transform = 'scale(1)';
+                return;
+            }
            
             if((mediadez-mediaTodas)<0){
                 pontos.innerHTML = (parseFloat(pontosAtuais) + ((mediadez-mediaTodas)/250)).toFixed(2);
@@ -205,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML =  (parseFloat(pontosAtuais)  - ((mediadez-mediaTodas)/250)).toFixed();
             }
             var distDoInit = ((((event.clientX-xInicial)**2) +((event.clientY-yInicial+3)**2))**0.5)
-            if( distDoInit<40 && posicoesMouse.length>98){
+            if( quadrante == quadranteInit && saiuDoInit == 1){
                 pontos.innerHTML = "sua pontuação final foi " + (parseFloat(pontos.innerHTML)).toFixed(2);
                 desenhando = false;
                 titulo.style.transition = 'transform 0.3s ease-out';
@@ -230,51 +277,63 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("POSSEG SETADO");
                     if (posSeg == false && xSeg>xInicial && ySeg>yInicial){
                         quadrante = 1 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                     if (posSeg == false && xSeg<xInicial && ySeg>yInicial){
                         quadrante = 2 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                     if (posSeg == false && xSeg<xInicial && ySeg<yInicial){
                         quadrante = 3 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                     if (posSeg == false && xSeg>xInicial && ySeg<yInicial){
                         quadrante = 4 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                 }
                 if(event.clientY< ymeio-10 && quadrante == 3 ){
                     quadrante =    3.5 ;
+                  //  saiuDoInit = 1;
                 }
                 if(event.clientY< ymeio+10 && quadrante == 3.5){
                     quadrante =    4 ;
+                    saiuDoInit = 1;
                 }
                 if(event.clientX> xmeio-10 && quadrante == 4){
                     quadrante =   4.5;
+                  //  saiuDoInit = 1;
                 }
 
                 if(event.clientX> xmeio+10 && quadrante == 4.5){
                     quadrante =   1;
+                    saiuDoInit = 1;
                 }
                 if(event.clientX< xmeio+10 && quadrante == 2){
                     quadrante =    2.5;
+                   // saiuDoInit = 1;
                 }
                 if(event.clientX< xmeio-10 && quadrante == 2.5){
                     quadrante =    3;
+                    saiuDoInit = 1;
                 }
                 if(event.clientY> ymeio-10 && quadrante == 1 ){
                     quadrante =    1.5 ;
+                   // saiuDoInit = 1;
                 }
                 if(event.clientY> ymeio+10 && quadrante == 1.5){
                     quadrante =    2 ;
+                    saiuDoInit = 1;
                 }
                 if (quadrante == 1 && (event.clientX+25 < xSeg|| event.clientY +25< ySeg) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                  //  titulo.style.transition = 'transform 0.3s ease-in';
+                    //titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -283,8 +342,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (quadrante == 2 && (event.clientX > xSeg+25 || event.clientY+25 < ySeg) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                  //  titulo.style.transition = 'transform 0.3s ease-in';
+                    //titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -293,8 +352,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (quadrante == 3 && (event.clientX > xSeg +25|| event.clientY > ySeg+25) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                  //  titulo.style.transition = 'transform 0.3s ease-in';
+                    //titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -303,8 +362,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (quadrante == 4 && (event.clientX+25 < xSeg|| event.clientY > ySeg+25) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                //    titulo.style.transition = 'transform 0.3s ease-in';
+                  //  titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -319,50 +378,62 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("POSSEG SETADO");
                     if (posSeg == false && xSeg<xInicial && ySeg>yInicial){
                         quadrante = 1 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                     if (posSeg == false && xSeg>xInicial && ySeg>yInicial){
                         quadrante = 2 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                     if (posSeg == false && xSeg>xInicial && ySeg<yInicial){
                         quadrante = 3 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                     if (posSeg == false && xSeg<xInicial && ySeg<yInicial){
                         quadrante = 4 ;
+                        quadranteInit = quadrante;
                         console.log("POSSEG SETADO HORARIO ");
                     }
                 }
                 if(event.clientY< ymeio+10 && quadrante == 3 ){
                     quadrante =    3.5 ;
+                   // saiuDoInit = 1;
                 }
                 if(event.clientY> ymeio-10 && quadrante == 3.5){
                     quadrante =    4 ;
+                    saiuDoInit = 1;
                 }
                 if(event.clientX< xmeio+10 && quadrante == 4){
                     quadrante =   4.5;
+                //    saiuDoInit = 1;
                 }
                 if(event.clientX< xmeio-10 && quadrante == 4.5){
                     quadrante =   1;
+                    saiuDoInit = 1;
                 }
                 if(event.clientX> xmeio-10 && quadrante == 2){
                     quadrante =    2.5;
+                  //  saiuDoInit = 1;
                 }
                 if(event.clientX> xmeio+10 && quadrante == 2.5){
                     quadrante =    3;
+                    saiuDoInit = 1;
                 }
                 if(event.clientY> ymeio-10 && quadrante == 1 ){
                     quadrante =    1.5 ;
+                  //  saiuDoInit = 1;
                 }
                 if(event.clientY> ymeio+10 && quadrante == 1.5){
                     quadrante =    2 ;
+                    saiuDoInit = 1;
                 }
                 if (quadrante == 1 && (event.clientX  > xSeg +25|| event.clientY +25< ySeg) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                  //  titulo.style.transition = 'transform 0.3s ease-in';
+                  //  titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -371,8 +442,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (quadrante == 2 && (event.clientX+25 < xSeg || event.clientY  +25< ySeg ) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                   // titulo.style.transition = 'transform 0.3s ease-in';
+                    //titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -381,8 +452,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (quadrante == 3 && (event.clientX+25 < xSeg || event.clientY > ySeg+25) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                   // titulo.style.transition = 'transform 0.3s ease-in';
+                    //titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -391,8 +462,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (quadrante == 4 && (event.clientX > xSeg+25|| event.clientY > ySeg+25) && posSeg == false  ){
                     pontos.innerHTML = "direção errada ";
                     desenhando = false;
-                    titulo.style.transition = 'transform 0.3s ease-in';
-                    titulo.style.transform = 'scale(1)';
+                   // titulo.style.transition = 'transform 0.3s ease-in';
+                   // titulo.style.transform = 'scale(1)';
                     divh.style.transition = 'transform 0.3s ease-in';
                     divh.style.transform = 'scale(1)';
                     divah.style.transition = 'transform 0.3s ease-in';
@@ -402,8 +473,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if(estoura>750){
                 pontos.innerHTML = "demorou muito ";
                 desenhando = false;
-                titulo.style.transition = 'transform 0.3s ease-in';
-                titulo.style.transform = 'scale(1)';
+            //    titulo.style.transition = 'transform 0.3s ease-in';
+             //   titulo.style.transform = 'scale(1)';
                 divh.style.transition = 'transform 0.3s ease-in';
                 divh.style.transform = 'scale(1)';
                 divah.style.transition = 'transform 0.3s ease-in';
@@ -412,8 +483,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if(posicoesMouse[posicoesMouse.length - 1] < 200 ){
                 pontos.innerHTML = "Muito perto ";
                 desenhando = false;
-                titulo.style.transition = 'transform 0.3s ease-in';
-                titulo.style.transform = 'scale(1)';
+              //  titulo.style.transition = 'transform 0.3s ease-in';
+              //  titulo.style.transform = 'scale(1)';
                 divh.style.transition = 'transform 0.3s ease-in';
                 divh.style.transform = 'scale(1)';
                 divah.style.transition = 'transform 0.3s ease-in';
