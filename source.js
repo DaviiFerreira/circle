@@ -19,9 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var trails = document.getElementById('trails');
     var divh = document.getElementById('div1');
     var divah = document.getElementById('div2');
+    var bestScore = document.getElementById('bestScore');
     var sentido = "horario"
     var quadranteInit = 0;
     var saiuDoInit = 0;
+    var best = 0;
 
     fundo.addEventListener('mousedown', function(event) {
         // Verifica se o botão esquerdo do mouse foi pressionado
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML  = '100.00';
                 posInit = true; 
                 posSeg = true;
+                bestScore.style.visibility = "hidden";
                 saiuDoInit = 0;
                 while(posicoesMouse.length){
                     posicoesMouse.shift();
@@ -66,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML  = '100.00';
                 posInit = true; 
                 posSeg = true;
+                bestScore.style.visibility = "hidden";
                 saiuDoInit = 0;
                 while(posicoesMouse.length){
                     posicoesMouse.shift();
@@ -98,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML  = '100.00';
                 posInit = true; 
                 posSeg = true;
+                bestScore.style.visibility = "hidden";
                 saiuDoInit = 0;
                 while(posicoesMouse.length){
                     posicoesMouse.shift();
@@ -130,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML  = '100.00';
                 posInit = true; 
                 posSeg = true;
+                bestScore.style.visibility = "hidden";
                 while(posicoesMouse.length){
                     posicoesMouse.shift();
                 }
@@ -258,7 +264,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 pontos.innerHTML =  (parseFloat(pontosAtuais)  - ((mediadez-mediaTodas)/250)).toFixed();
             }
             var distDoInit = ((((event.clientX-xInicial)**2) +((event.clientY-yInicial+3)**2))**0.5)
-            if( quadrante == quadranteInit && saiuDoInit == 1){
+            if( quadrante == quadranteInit && saiuDoInit == 1 && posicoesMouse.length>50){
+                if ((parseFloat(pontos.innerHTML)).toFixed(2)>best){
+                    best = (parseFloat(pontos.innerHTML)).toFixed(2);
+                    bestScore.style.visibility ="visible" ;
+                    bestScore.innerHTML = "parabens novo recorde"
+                }
+                if ((parseFloat(pontos.innerHTML)).toFixed(2)<=best){
+                    bestScore.style.visibility ="visible" ;
+                    bestScore.innerHTML = "seu recorde é " + best;
+                }
                 pontos.innerHTML = "sua pontuação final foi " + (parseFloat(pontos.innerHTML)).toFixed(2);
                 desenhando = false;
                 titulo.style.transition = 'transform 0.3s ease-out';
@@ -267,6 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 divh.style.transform = 'scale(1)';
                 divah.style.transition = 'transform 0.3s ease-in';
                 divah.style.transform = 'scale(1)';
+                
             }
             if(posicoesMouse.length>=10 && dezEmDez>=10){
                 xSeg=event.clientX;
