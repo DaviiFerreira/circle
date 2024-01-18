@@ -16,11 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var quadrante = 0;
     var dezEmDez = 0;
     var titulo = document.getElementById('titulo');
+    var trails = document.getElementById('trails');
     var divh = document.getElementById('div1');
     var divah = document.getElementById('div2');
     var sentido = "horario"
     var quadranteInit = 0;
     var saiuDoInit = 0;
+
     fundo.addEventListener('mousedown', function(event) {
         // Verifica se o botão esquerdo do mouse foi pressionado
         if (event.button === 0 && iniciado) {
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 divh.style.transform = 'scale(0)';
                 divah.style.transition = 'transform 0.3s ease-out';
                 divah.style.transform = 'scale(0)';
+                trails.innerHTML = "";
                 
             }
             if( pontos.innerHTML[0] == 's'   ){
@@ -88,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 divh.style.transform = 'scale(0)';
                 divah.style.transition = 'transform 0.3s ease-out';
                 divah.style.transform = 'scale(0)';
+                trails.innerHTML = "";
                 
             }
             if( pontos.innerHTML[0] == 'd'   ){
@@ -120,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 divh.style.transform = 'scale(0)';
                 divah.style.transition = 'transform 0.3s ease-out';
                 divah.style.transform = 'scale(0)';
+                trails.innerHTML = "";
             }
             if( pontos.innerHTML[0] == 'M'   ){
                 pontos.innerHTML  = '100.00';
@@ -151,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 divh.style.transform = 'scale(0)';
                 divah.style.transition = 'transform 0.3s ease-out';
                 divah.style.transform = 'scale(0)';
+                trails.innerHTML = "";
             }
            
            // posInit = true;
@@ -498,13 +504,13 @@ document.addEventListener('DOMContentLoaded', function() {
             trail.style.top = event.clientY + 'px';
 
             // Adiciona a linha ao fundo
-            fundo.appendChild(trail);
+            trails.appendChild(trail);
             dezEmDez++;
             // Define um tempo para remover a linha
-            setTimeout(function() {
+            /*setTimeout(function() {
                 // Remove a linha
                 fundo.removeChild(trail);
-            }, 200);
+            }, 200);*/
         }
     });
 });
