@@ -256,11 +256,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 divah.style.transform = 'scale(1)';
                 return;
             }
-           
-            if((mediadez-mediaTodas)<0){
+           var pontosPerdidos = 0;
+            if((mediadez-mediaTodas)<=0){
+                pontosPerdidos = ((-(mediadez-mediaTodas)/250)).toFixed(2);
                 pontos.innerHTML = (parseFloat(pontosAtuais) + ((mediadez-mediaTodas)/250)).toFixed(2);
             }
             if((mediadez-mediaTodas)>0){
+                pontosPerdidos = (((mediadez-mediaTodas)/250)).toFixed(2);
+
                 pontos.innerHTML =  (parseFloat(pontosAtuais)  - ((mediadez-mediaTodas)/250)).toFixed();
             }
             var distDoInit = ((((event.clientX-xInicial)**2) +((event.clientY-yInicial+3)**2))**0.5)
@@ -518,6 +521,20 @@ document.addEventListener('DOMContentLoaded', function() {
             trail.style.position = 'absolute';
             trail.style.left = event.clientX + 'px';
             trail.style.top = event.clientY + 'px';
+            trail.style.background = 'MediumSeaGreen';
+
+            if(pontosPerdidos>0.075){
+                trail.style.background = 'MediumSlateBlue ';
+            }
+            if(pontosPerdidos>0.125){
+                trail.style.background = 'Khaki';
+            }
+            if(pontosPerdidos>0.25){
+                trail.style.background = 'HotPink';
+            }
+            if(pontosPerdidos>0.5){
+                trail.style.background = 'Red';
+            }
 
             // Adiciona a linha ao fundo
             trails.appendChild(trail);
