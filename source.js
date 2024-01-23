@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var trails = document.getElementById('trails');
     var divh = document.getElementById('div1');
     var divah = document.getElementById('div2');
-    var bestScore = document.getElementById('bestScore');
     var pontos = document.getElementById('pontos');
     var desenhando = false;
     var iniciado = false;
@@ -26,6 +25,46 @@ document.addEventListener('DOMContentLoaded', function () {
     var quadranteInit = 0;
     var saiuDoInit = 0;
     var best = 0;
+    var pontosPerdidos = 0;
+    function calculaPontos() {
+        posicoesMouse.push((((event.clientX - xmeio) ** 2) + ((event.clientY - ymeio + 3) ** 2)) ** 0.5);
+        if (posicoesMouse.length > 100) {
+            posicoesMouse.shift(); // Remove a posição mais antiga se houver mais de 100
+        }
+        if (posInit) {
+            xInicial = event.clientX;
+            yInicial = event.clientY;
+            posInit = false;
+        }
+        var mediadez = 0;
+        var mediaTodas = 0;
+        var qtd = 0;
+        for (var i = 0; i < posicoesMouse.length; i++) {
+            if (i < 10) {
+                mediadez += posicoesMouse[i];
+                qtd++;
+            }
+            mediaTodas += posicoesMouse[i];
+        }
+
+
+
+
+        mediadez = mediadez / qtd;
+        mediaTodas = mediaTodas / posicoesMouse.length;
+        var pontosAtuais = pontos.innerHTML;
+
+
+        if ((mediadez - mediaTodas) <= 0) {
+            pontosPerdidos = ((-(mediadez - mediaTodas) / 250)).toFixed(2);
+            pontos.innerHTML = (parseFloat(pontosAtuais) + ((mediadez - mediaTodas) / 250)).toFixed(2);
+        }
+        if ((mediadez - mediaTodas) > 0) {
+            pontosPerdidos = (((mediadez - mediaTodas) / 250)).toFixed(2);
+
+            pontos.innerHTML = (parseFloat(pontosAtuais) - ((mediadez - mediaTodas) / 250)).toFixed();
+        }
+    }
     function GameStart() {
 
         pontos.innerHTML = '100.00';
@@ -61,8 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function EndGame(mensage) {
         pontos.innerHTML = mensage;
         desenhando = false;
-        //  titulo.style.transition = 'transform 0.3s ease-in';
-        //titulo.style.transform = 'scale(1)';
         divh.style.transition = 'transform 0.3s ease-in';
         divh.style.transform = 'scale(1)';
         divah.style.transition = 'transform 0.3s ease-in';
@@ -73,23 +110,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.button === 0 && iniciado) {
             titulo.style.transition = 'transform 0.3s ease-out';
             titulo.style.transform = 'scale(0)';
-            desenhando = true; // Começa a desenhar
+            desenhando = true;
 
-            if (pontos.innerHTML[0] == 'T') {
+            if (pontos.innerHTML[0] == 'T' || pontos.innerHTML[0] == 's' || pontos.innerHTML[0] == 'd' || pontos.innerHTML[0] == 'M') {
                 GameStart();
             }
-
-            if (pontos.innerHTML[0] == 's') {
-                GameStart();
-            }
-            if (pontos.innerHTML[0] == 'd') {
-                GameStart();
-            }
-            if (pontos.innerHTML[0] == 'M') {
-                GameStart();
-            }
-
-            // posInit = true;
         }
     });
 
@@ -110,54 +135,24 @@ document.addEventListener('DOMContentLoaded', function () {
     fundo.addEventListener('mousemove', function (event) {
         // Verifica se o botão esquerdo do mouse está pressionado
         if (desenhando) {
+            var bestScore = document.getElementById('bestScore');
             titulo.style.transition = 'transform 0.3s ease-out';
             titulo.style.transform = 'scale(0)';
             estoura++;
             // Cria um elemento de linha
             var trail = document.createElement('div');
             trail.classList.add('trail');
-            posicoesMouse.push((((event.clientX - xmeio) ** 2) + ((event.clientY - ymeio + 3) ** 2)) ** 0.5);
-            if (posicoesMouse.length > 100) {
-                posicoesMouse.shift(); // Remove a posição mais antiga se houver mais de 100
-            }
-            if (posInit) {
-                xInicial = event.clientX;
-                yInicial = event.clientY;
-                posInit = false;
-            }
-            var mediadez = 0;
-            var mediaTodas = 0;
-            var qtd = 0;
-            for (var i = 0; i < posicoesMouse.length; i++) {
-                if (i < 10) {
-                    mediadez += posicoesMouse[i];
-                    qtd++;
-                }
-                mediaTodas += posicoesMouse[i];
-            }
+            calculaPontos();
 
-
-
-
-            mediadez = mediadez / qtd;
-            mediaTodas = mediaTodas / posicoesMouse.length;
             var pontosAtuais = pontos.innerHTML;
             if (pontosAtuais < 35) {
                 EndGame("TEM CERTEZA QUE ISSO É UM CIRCULO?");
 
                 return;
             }
-            var pontosPerdidos = 0;
-            if ((mediadez - mediaTodas) <= 0) {
-                pontosPerdidos = ((-(mediadez - mediaTodas) / 250)).toFixed(2);
-                pontos.innerHTML = (parseFloat(pontosAtuais) + ((mediadez - mediaTodas) / 250)).toFixed(2);
-            }
-            if ((mediadez - mediaTodas) > 0) {
-                pontosPerdidos = (((mediadez - mediaTodas) / 250)).toFixed(2);
 
-                pontos.innerHTML = (parseFloat(pontosAtuais) - ((mediadez - mediaTodas) / 250)).toFixed();
-            }
-            if (quadrante == quadranteInit && saiuDoInit == 1 && posicoesMouse.length > 50) {
+
+            if (quadrante == quadranteInit && saiuDoInit == 1 && estoura > 100) {
                 if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
                     best = (parseFloat(pontos.innerHTML)).toFixed(2);
                     bestScore.style.visibility = "visible";
@@ -318,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (posicoesMouse[posicoesMouse.length - 1] < 200) {
                 EndGame("Muito perto ");
             }
-            // Define a posição inicial da linha
             trail.style.position = 'absolute';
             trail.style.left = event.clientX + 'px';
             trail.style.top = event.clientY + 'px';
@@ -336,15 +330,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (pontosPerdidos > 0.5) {
                 trail.style.background = 'Red';
             }
-
-            // Adiciona a linha ao fundo
             trails.appendChild(trail);
             dezEmDez++;
-            // Define um tempo para remover a linha
-            /*setTimeout(function() {
-                // Remove a linha
-                fundo.removeChild(trail);
-            }, 200);*/
+
         }
     });
 });
