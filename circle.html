@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,27 +11,30 @@
         body {
             margin: 0;
         }
+
         /* Dentro do seu arquivo de estilo (style.css ou similar) */
 
         .trail {
             background-color: rgb(255, 255, 255);
             border-radius: 50%;
             height: 2vh;
-            width:  2vh;
+            width: 2vh;
             position: absolute;
             transform-origin: left center;
             transition: transform 0.2s ease-out;
         }
+
         .pontos {
             background: rgba(255, 255, 255, 0);
             height: 10vh;
-            width:  15vw;
+            width: 15vw;
             text-align: center;
             color: rgb(122, 122, 228);
             margin-bottom: 10vh;
             position: absolute;
-           
+
         }
+
         .div1 {
             display: inline-block;
             width: 50%;
@@ -39,6 +43,7 @@
             text-align: center;
             color: rgb(122, 122, 228);
         }
+
         .div2 {
             display: inline-block;
             width: 50%;
@@ -48,19 +53,27 @@
             color: rgb(122, 122, 228);
 
         }
+
         .texto {
             margin-top: 50vh;
             font-size: 3.5vh;
             text-align: center;
             color: rgb(122, 122, 228);
         }
+
         .naoSelecionavel {
-            -webkit-touch-callout: none;  /* iPhone OS, Safari */
-            -webkit-user-select: none;    /* Chrome, Safari 3 */
-            -khtml-user-select: none;     /* Safari 2 */
-            -moz-user-select: none;       /* Firefox */
-            -ms-user-select: none;        /* IE10+ */
-            user-select: none;            /* Possível implementação no futuro */
+            -webkit-touch-callout: none;
+            /* iPhone OS, Safari */
+            -webkit-user-select: none;
+            /* Chrome, Safari 3 */
+            -khtml-user-select: none;
+            /* Safari 2 */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+ */
+            user-select: none;
+            /* Possível implementação no futuro */
             /* cursor: default; */
         }
 
@@ -68,25 +81,27 @@
         #fundo {
             background: rgb(0, 0, 0);
             height: 100vh;
-            width:  100vw;
+            width: 100vw;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         #titulo {
             background: rgba(255, 255, 255, 0);
             height: 10vh;
-            width:  15vw;
+            width: 15vw;
             text-align: center;
             color: rgb(122, 122, 228);
             margin-top: 20vh;
             position: absolute;
-    }
+        }
+
         #bestScore {
             background: rgba(255, 255, 255, 0);
             height: 10vh;
-            width:  15vw;
+            width: 15vw;
             text-align: center;
             color: rgb(122, 122, 228);
             margin-bottom: 20vh;
@@ -99,37 +114,40 @@
             background: rgb(255, 255, 255);
             border-radius: 50%;
             height: 10vh;
-            width:  10vh;
+            width: 10vh;
             position: absolute;
             margin-bottom: 3vh;
-    }
+        }
     </style>
 </head>
+
 <body>
-<div id="fundo">
-   
-    <div id="div1" class = "div1 naoSelecionavel">
-        <div class ="texto">
-            Clique aqui para desenhar no sentido anti horario 
-        </div> 
-    </div>
-    <div id = "div2" class = "div2 naoSelecionavel">         
-        <div class ="texto">
-            Clique aqui para desenhar no sentido horario 
-        </div> 
-    </div>
-    <div id = "titulo" class = "naoSelecionavel">
-        Clique Para Iniciar!<br />
-    </div>
-    <div id = "circuloCentral" class = "naoSelecionavel">
-    </div>
-    <div id = "trails" class = "naoSelecionavel">
-    </div>
-    <div id = "bestScore" class="naoSelecionavel">
-        Seu recorde é: 
+    <div id="fundo">
+
+        <div id="div1" class="div1 naoSelecionavel">
+            <div class="texto">
+                Clique aqui para desenhar no sentido anti horario
+            </div>
+        </div>
+        <div id="div2" class="div2 naoSelecionavel">
+            <div class="texto">
+                Clique aqui para desenhar no sentido horario
+            </div>
+        </div>
+        <div id="titulo" class="naoSelecionavel">
+            Clique Para Iniciar!<br />
+        </div>
+        <div id="circuloCentral" class="naoSelecionavel">
+        </div>
+        <div id="trails" class="naoSelecionavel">
+        </div>
+        <div id="bestScore" class="naoSelecionavel">
+            Seu recorde é:
+        </div>
+        <div id="pontos" class="naoSelecionavel pontos">
+        </div>
     </div>
 
-</div>
-    
 </body>
+
 </html>
