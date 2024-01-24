@@ -40,16 +40,12 @@ document.addEventListener('DOMContentLoaded', function () {
         var mediaTodas = 0;
         var qtd = 0;
         for (var i = 0; i < posicoesMouse.length; i++) {
-            if (i < 10) {
+            if (i > posicoesMouse.length - 10) {
                 mediadez += posicoesMouse[i];
                 qtd++;
             }
             mediaTodas += posicoesMouse[i];
         }
-
-
-
-
         mediadez = mediadez / qtd;
         mediaTodas = mediaTodas / posicoesMouse.length;
         var pontosAtuais = pontos.innerHTML;
@@ -77,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         estoura = 0;
         horario = 0;
+        quadrante = 0;
         if (event.clientX < xmeio) {
             sentido = "antihorario"
             horario = -1;
@@ -105,6 +102,187 @@ document.addEventListener('DOMContentLoaded', function () {
         divah.style.transition = 'transform 0.3s ease-in';
         divah.style.transform = 'scale(1)';
     }
+    function quadrantes() {
+        if (horario == 1) {
+            if (posicoesMouse.length >= 10 && posSeg) {
+
+                console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit)
+
+                if (xmeio < xInicial && ymeio > yInicial) {
+                    quadrante = 1;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                }
+                if (xmeio < xInicial && ymeio < yInicial) {
+                    quadrante = 2;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                }
+                if (xmeio > xInicial && ymeio < yInicial) {
+                    quadrante = 3;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                }
+                if (xmeio > xInicial && ymeio > yInicial) {
+                    quadrante = 4;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                }
+            }
+            if (event.clientY < ymeio - 10 && quadrante == 3) {
+                quadrante = 3.5;
+                //  saiuDoInit = 1;
+            }
+            if (event.clientY < ymeio + 10 && quadrante == 3.5) {
+                quadrante = 4;
+                saiuDoInit = 1;
+            }
+            if (event.clientX > xmeio - 10 && quadrante == 4) {
+                quadrante = 4.5;
+                //  saiuDoInit = 1;
+            }
+
+            if (event.clientX > xmeio + 10 && quadrante == 4.5) {
+                quadrante = 1;
+                saiuDoInit = 1;
+            }
+            if (event.clientX < xmeio + 10 && quadrante == 2) {
+                quadrante = 2.5;
+                // saiuDoInit = 1;
+            }
+            if (event.clientX < xmeio - 10 && quadrante == 2.5) {
+                quadrante = 3;
+                saiuDoInit = 1;
+            }
+            if (event.clientY > ymeio - 10 && quadrante == 1) {
+                quadrante = 1.5;
+                // saiuDoInit = 1;
+            }
+            if (event.clientY > ymeio + 10 && quadrante == 1.5) {
+                quadrante = 2;
+                saiuDoInit = 1;
+            }
+            if (quadrante == 1 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 2 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 3 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 4 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+        }
+        if (horario == -1) {
+            if (posicoesMouse.length >= 10 && posSeg) {
+
+
+                if (xInicial < xmeio && yInicial < ymeio) {
+                    quadrante = 1;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
+                }
+                if (xInicial < xmeio && yInicial > ymeio) {
+                    quadrante = 2;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
+                }
+                if (xInicial > xmeio && yInicial > ymeio) {
+                    quadrante = 3;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
+                }
+                if (xInicial > xmeio && yInicial < ymeio) {
+                    quadrante = 4;
+                    quadranteInit = quadrante;
+                    posSeg = false;
+                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
+                }
+            }
+            if (event.clientY < ymeio + 10 && quadrante == 3) {
+                quadrante = 3.5;
+                // saiuDoInit = 1;
+            }
+            if (event.clientY > ymeio - 10 && quadrante == 3.5) {
+                quadrante = 4;
+                saiuDoInit = 1;
+            }
+            if (event.clientX < xmeio + 10 && quadrante == 4) {
+                quadrante = 4.5;
+                //    saiuDoInit = 1;
+            }
+            if (event.clientX < xmeio - 10 && quadrante == 4.5) {
+                quadrante = 1;
+                saiuDoInit = 1;
+            }
+            if (event.clientX > xmeio - 10 && quadrante == 2) {
+                quadrante = 2.5;
+                //  saiuDoInit = 1;
+            }
+            if (event.clientX > xmeio + 10 && quadrante == 2.5) {
+                quadrante = 3;
+                saiuDoInit = 1;
+            }
+            if (event.clientY > ymeio - 10 && quadrante == 1) {
+                quadrante = 1.5;
+                //  saiuDoInit = 1;
+            }
+            if (event.clientY > ymeio + 10 && quadrante == 1.5) {
+                quadrante = 2;
+                saiuDoInit = 1;
+            }
+            if (quadrante == 1 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 2 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 3 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 4 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+        }
+    };
+    function demorou() {
+        if (estoura > 750) {
+            EndGame("demorou muito");
+        }
+    }
+    function muitoPerto() {
+        let calculaDist = (((fundo.clientHeight) ** 2) + ((fundo.clientWidth) ** 2)) ** 0.5 / 10;
+        if (posicoesMouse[posicoesMouse.length - 1] < calculaDist) {
+            EndGame("Muito perto ");
+        }
+    }
+    function fazPontosDaLinha() {
+        var trail = document.createElement('div');
+        trail.classList.add('trail');
+        trail.style.position = 'absolute';
+        trail.style.left = event.clientX + 'px';
+        trail.style.top = event.clientY + 'px';
+        trail.style.background = 'MediumSeaGreen';
+
+        if (pontosPerdidos > 0.075) {
+            trail.style.background = 'SteelBlue ';
+        }
+        if (pontosPerdidos > 0.125) {
+            trail.style.background = 'Khaki';
+        }
+        if (pontosPerdidos > 0.25) {
+            trail.style.background = 'HotPink';
+        }
+        if (pontosPerdidos > 0.5) {
+            trail.style.background = 'Red';
+        }
+        trails.appendChild(trail);
+    }
     fundo.addEventListener('mousedown', function (event) {
 
         if (event.button === 0 && iniciado) {
@@ -117,8 +295,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-
-
 
     fundo.addEventListener('mousedown', function (event) {
         // Verifica se o botão esquerdo do mouse foi pressionado
@@ -140,8 +316,6 @@ document.addEventListener('DOMContentLoaded', function () {
             titulo.style.transform = 'scale(0)';
             estoura++;
             // Cria um elemento de linha
-            var trail = document.createElement('div');
-            trail.classList.add('trail');
             calculaPontos();
 
             var pontosAtuais = pontos.innerHTML;
@@ -152,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
-            if (quadrante == quadranteInit && saiuDoInit == 1 && estoura > 100) {
+            if (quadrante == quadranteInit && saiuDoInit == 1 && estoura > 100 && quadrante != 0) {
                 if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
                     best = (parseFloat(pontos.innerHTML)).toFixed(2);
                     bestScore.style.visibility = "visible";
@@ -172,165 +346,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 dezEmDez = 0;
             }
 
-            if (horario == 1) {
-                if (posicoesMouse.length >= 10 && posSeg) {
-                    xSeg = event.clientX;
-                    ySeg = event.clientY;
-                    posSeg = false;
-                    if (posSeg == false && xSeg > xInicial && ySeg > yInicial) {
-                        quadrante = 1;
-                        quadranteInit = quadrante;
-                    }
-                    if (posSeg == false && xSeg < xInicial && ySeg > yInicial) {
-                        quadrante = 2;
-                        quadranteInit = quadrante;
-                    }
-                    if (posSeg == false && xSeg < xInicial && ySeg < yInicial) {
-                        quadrante = 3;
-                        quadranteInit = quadrante;
-                    }
-                    if (posSeg == false && xSeg > xInicial && ySeg < yInicial) {
-                        quadrante = 4;
-                        quadranteInit = quadrante;
-                    }
-                }
-                if (event.clientY < ymeio - 10 && quadrante == 3) {
-                    quadrante = 3.5;
-                    //  saiuDoInit = 1;
-                }
-                if (event.clientY < ymeio + 10 && quadrante == 3.5) {
-                    quadrante = 4;
-                    saiuDoInit = 1;
-                }
-                if (event.clientX > xmeio - 10 && quadrante == 4) {
-                    quadrante = 4.5;
-                    //  saiuDoInit = 1;
-                }
-
-                if (event.clientX > xmeio + 10 && quadrante == 4.5) {
-                    quadrante = 1;
-                    saiuDoInit = 1;
-                }
-                if (event.clientX < xmeio + 10 && quadrante == 2) {
-                    quadrante = 2.5;
-                    // saiuDoInit = 1;
-                }
-                if (event.clientX < xmeio - 10 && quadrante == 2.5) {
-                    quadrante = 3;
-                    saiuDoInit = 1;
-                }
-                if (event.clientY > ymeio - 10 && quadrante == 1) {
-                    quadrante = 1.5;
-                    // saiuDoInit = 1;
-                }
-                if (event.clientY > ymeio + 10 && quadrante == 1.5) {
-                    quadrante = 2;
-                    saiuDoInit = 1;
-                }
-                if (quadrante == 1 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 2 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 3 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 4 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-            }
-            if (horario == -1) {
-                if (posicoesMouse.length >= 10 && posSeg) {
-                    xSeg = event.clientX;
-                    ySeg = event.clientY;
-                    posSeg = false;
-                    if (posSeg == false && xSeg < xInicial && ySeg > yInicial) {
-                        quadrante = 1;
-                        quadranteInit = quadrante;
-                    }
-                    if (posSeg == false && xSeg > xInicial && ySeg > yInicial) {
-                        quadrante = 2;
-                        quadranteInit = quadrante;
-                    }
-                    if (posSeg == false && xSeg > xInicial && ySeg < yInicial) {
-                        quadrante = 3;
-                        quadranteInit = quadrante;
-                    }
-                    if (posSeg == false && xSeg < xInicial && ySeg < yInicial) {
-                        quadrante = 4;
-                        quadranteInit = quadrante;
-                    }
-                }
-                if (event.clientY < ymeio + 10 && quadrante == 3) {
-                    quadrante = 3.5;
-                    // saiuDoInit = 1;
-                }
-                if (event.clientY > ymeio - 10 && quadrante == 3.5) {
-                    quadrante = 4;
-                    saiuDoInit = 1;
-                }
-                if (event.clientX < xmeio + 10 && quadrante == 4) {
-                    quadrante = 4.5;
-                    //    saiuDoInit = 1;
-                }
-                if (event.clientX < xmeio - 10 && quadrante == 4.5) {
-                    quadrante = 1;
-                    saiuDoInit = 1;
-                }
-                if (event.clientX > xmeio - 10 && quadrante == 2) {
-                    quadrante = 2.5;
-                    //  saiuDoInit = 1;
-                }
-                if (event.clientX > xmeio + 10 && quadrante == 2.5) {
-                    quadrante = 3;
-                    saiuDoInit = 1;
-                }
-                if (event.clientY > ymeio - 10 && quadrante == 1) {
-                    quadrante = 1.5;
-                    //  saiuDoInit = 1;
-                }
-                if (event.clientY > ymeio + 10 && quadrante == 1.5) {
-                    quadrante = 2;
-                    saiuDoInit = 1;
-                }
-                if (quadrante == 1 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 2 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 3 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 4 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-            }
-            if (estoura > 750) {
-                EndGame("demorou muito");
-            }
-            if (posicoesMouse[posicoesMouse.length - 1] < 200) {
-                EndGame("Muito perto ");
-            }
-            trail.style.position = 'absolute';
-            trail.style.left = event.clientX + 'px';
-            trail.style.top = event.clientY + 'px';
-            trail.style.background = 'MediumSeaGreen';
-
-            if (pontosPerdidos > 0.075) {
-                trail.style.background = 'SteelBlue ';
-            }
-            if (pontosPerdidos > 0.125) {
-                trail.style.background = 'Khaki';
-            }
-            if (pontosPerdidos > 0.25) {
-                trail.style.background = 'HotPink';
-            }
-            if (pontosPerdidos > 0.5) {
-                trail.style.background = 'Red';
-            }
-            trails.appendChild(trail);
+            quadrantes();
+            demorou();
+            muitoPerto();
+            fazPontosDaLinha();
             dezEmDez++;
 
         }
