@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (horario == 1) {
             if (posicoesMouse.length >= 10 && posSeg) {
 
-                console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit)
 
                 if (xmeio < xInicial && ymeio > yInicial) {
                     quadrante = 1;
@@ -183,25 +182,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     quadrante = 1;
                     quadranteInit = quadrante;
                     posSeg = false;
-                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
                 }
                 if (xInicial < xmeio && yInicial > ymeio) {
                     quadrante = 2;
                     quadranteInit = quadrante;
                     posSeg = false;
-                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
                 }
                 if (xInicial > xmeio && yInicial > ymeio) {
                     quadrante = 3;
                     quadranteInit = quadrante;
                     posSeg = false;
-                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
                 }
                 if (xInicial > xmeio && yInicial < ymeio) {
                     quadrante = 4;
                     quadranteInit = quadrante;
                     posSeg = false;
-                    console.log(xSeg, xInicial, ySeg, yInicial, ySeg, ymeio, quadranteInit);
                 }
             }
             if (event.clientY < ymeio + 10 && quadrante == 3) {
