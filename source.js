@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var fundo = document.getElementById('fundo');
     var titulo = document.getElementById('titulo');
     var trails = document.getElementById('trails');
-    var divh = document.getElementById('div1');
-    var divah = document.getElementById('div2');
+
     var pontos = document.getElementById('pontos');
     var desenhando = false;
     var iniciado = false;
@@ -17,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var xSeg = 0;
     var ySeg = 0;
     var posSeg = true;
-    var estoura = 0;
+    var estoura = new Date();
+    estoura = estoura.getTime()
     var horario = 0;
     var quadrante = 0;
     var dezEmDez = 0;
@@ -71,10 +71,11 @@ document.addEventListener('DOMContentLoaded', function () {
         while (posicoesMouse.length) {
             posicoesMouse.shift();
         }
-        estoura = 0;
+        estoura = new Date();
+        estoura = estoura.getTime()
         horario = 0;
         quadrante = 0;
-        if (event.clientX < xmeio) {
+        /*if (event.clientX < xmeio) {
             sentido = "antihorario"
             horario = -1;
 
@@ -83,55 +84,98 @@ document.addEventListener('DOMContentLoaded', function () {
             sentido = "horario"
             horario = 1;
 
-        }
+        }*/
         titulo.innerHTML = " Clique Para Iniciar!<br /> desenhe no sentido " + sentido;
         titulo.style.transition = 'transform 0.3s ease-in';
         titulo.style.transform = 'scale(1)';
-        divh.style.transition = 'transform 0.3s ease-out';
-        divh.style.transform = 'scale(0)';
-        divah.style.transition = 'transform 0.3s ease-out';
-        divah.style.transform = 'scale(0)';
         trails.innerHTML = "";
 
     }
     function EndGame(mensage) {
         pontos.innerHTML = mensage;
         desenhando = false;
-        divh.style.transition = 'transform 0.3s ease-in';
-        divh.style.transform = 'scale(1)';
-        divah.style.transition = 'transform 0.3s ease-in';
-        divah.style.transform = 'scale(1)';
     }
     function quadrantes() {
-        if (horario == 1) {
-            if (posicoesMouse.length >= 10 && posSeg) {
+        if (posicoesMouse.length >= 10 && posSeg) {
 
-
-                if (xmeio < xInicial && ymeio > yInicial) {
-                    quadrante = 1;
-                    quadranteInit = quadrante;
-                    posSeg = false;
+            if (xmeio < xInicial && ymeio > yInicial) {
+                quadrante = 1;
+                quadranteInit = quadrante;
+                posSeg = false;
+                if (ySeg > yInicial) {
+                    horario = 1;
                 }
-                if (xmeio < xInicial && ymeio < yInicial) {
-                    quadrante = 2;
-                    quadranteInit = quadrante;
-                    posSeg = false;
-                }
-                if (xmeio > xInicial && ymeio < yInicial) {
-                    quadrante = 3;
-                    quadranteInit = quadrante;
-                    posSeg = false;
-                }
-                if (xmeio > xInicial && ymeio > yInicial) {
-                    quadrante = 4;
-                    quadranteInit = quadrante;
-                    posSeg = false;
+                else {
+                    horario = -1;
                 }
             }
+            if (xmeio < xInicial && ymeio < yInicial) {
+                quadrante = 2;
+                quadranteInit = quadrante;
+                posSeg = false;
+                if (ySeg > yInicial) {
+                    horario = 1;
+                }
+                else {
+                    horario = -1;
+                }
+            }
+            if (xmeio > xInicial && ymeio < yInicial) {
+                quadrante = 3;
+                quadranteInit = quadrante;
+                posSeg = false;
+                if (ySeg < yInicial) {
+                    horario = 1;
+                }
+                else {
+                    horario = -1;
+                }
+            }
+            if (xmeio > xInicial && ymeio > yInicial) {
+                quadrante = 4;
+                quadranteInit = quadrante;
+                posSeg = false;
+                if (ySeg < yInicial) {
+                    horario = 1;
+                }
+                else {
+                    horario = -1;
+                }
+            }
+        }
+
+
+        //horario init
+
+
+        //horario fim 
+
+
+        //antihorario init
+
+        //antihorario fim
+        if (horario == 1) {
+
+            if (event.clientY > ymeio - 10 && quadrante == 1) {
+                quadrante = 1.5;
+            }
+            if (event.clientY > ymeio + 10 && quadrante == 1.5) {
+                quadrante = 2;
+                saiuDoInit = 1;
+            }
+            if (event.clientX < xmeio + 10 && quadrante == 2) {
+                quadrante = 2.5;
+            }
+            if (event.clientX < xmeio - 10 && quadrante == 2.5) {
+                quadrante = 3;
+                saiuDoInit = 1;
+            }
+
             if (event.clientY < ymeio - 10 && quadrante == 3) {
                 quadrante = 3.5;
                 //  saiuDoInit = 1;
             }
+
             if (event.clientY < ymeio + 10 && quadrante == 3.5) {
                 quadrante = 4;
                 saiuDoInit = 1;
@@ -144,110 +188,74 @@ document.addEventListener('DOMContentLoaded', function () {
             if (event.clientX > xmeio + 10 && quadrante == 4.5) {
                 quadrante = 1;
                 saiuDoInit = 1;
-            }
-            if (event.clientX < xmeio + 10 && quadrante == 2) {
-                quadrante = 2.5;
-                // saiuDoInit = 1;
-            }
-            if (event.clientX < xmeio - 10 && quadrante == 2.5) {
-                quadrante = 3;
-                saiuDoInit = 1;
-            }
-            if (event.clientY > ymeio - 10 && quadrante == 1) {
-                quadrante = 1.5;
-                // saiuDoInit = 1;
-            }
-            if (event.clientY > ymeio + 10 && quadrante == 1.5) {
-                quadrante = 2;
-                saiuDoInit = 1;
-            }
-            if (quadrante == 1 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
-                EndGame("direção errada ");
-            }
-            if (quadrante == 2 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
-                EndGame("direção errada ");
-            }
-            if (quadrante == 3 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
-                EndGame("direção errada ");
-            }
-            if (quadrante == 4 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
-                EndGame("direção errada ");
+                if (quadrante == 1 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
+                    EndGame("direção errada ");
+                }
+                if (quadrante == 2 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
+                    EndGame("direção errada ");
+                }
+                if (quadrante == 3 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
+                    EndGame("direção errada ");
+                }
+                if (quadrante == 4 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
+                    EndGame("direção errada ");
+                }
             }
         }
         if (horario == -1) {
-            if (posicoesMouse.length >= 10 && posSeg) {
-
-
-                if (xInicial < xmeio && yInicial < ymeio) {
-                    quadrante = 1;
-                    quadranteInit = quadrante;
-                    posSeg = false;
-                }
-                if (xInicial < xmeio && yInicial > ymeio) {
-                    quadrante = 2;
-                    quadranteInit = quadrante;
-                    posSeg = false;
-                }
-                if (xInicial > xmeio && yInicial > ymeio) {
-                    quadrante = 3;
-                    quadranteInit = quadrante;
-                    posSeg = false;
-                }
-                if (xInicial > xmeio && yInicial < ymeio) {
-                    quadrante = 4;
-                    quadranteInit = quadrante;
-                    posSeg = false;
-                }
-            }
-            if (event.clientY < ymeio + 10 && quadrante == 3) {
-                quadrante = 3.5;
+            if (event.clientX > xmeio - 10 && quadrante == 3) {
+                quadrante = 2.5;
                 // saiuDoInit = 1;
             }
-            if (event.clientY > ymeio - 10 && quadrante == 3.5) {
-                quadrante = 4;
-                saiuDoInit = 1;
-            }
-            if (event.clientX < xmeio + 10 && quadrante == 4) {
-                quadrante = 4.5;
-                //    saiuDoInit = 1;
-            }
-            if (event.clientX < xmeio - 10 && quadrante == 4.5) {
-                quadrante = 1;
-                saiuDoInit = 1;
-            }
-            if (event.clientX > xmeio - 10 && quadrante == 2) {
-                quadrante = 2.5;
-                //  saiuDoInit = 1;
-            }
             if (event.clientX > xmeio + 10 && quadrante == 2.5) {
-                quadrante = 3;
-                saiuDoInit = 1;
-            }
-            if (event.clientY > ymeio - 10 && quadrante == 1) {
-                quadrante = 1.5;
-                //  saiuDoInit = 1;
-            }
-            if (event.clientY > ymeio + 10 && quadrante == 1.5) {
                 quadrante = 2;
                 saiuDoInit = 1;
             }
-            if (quadrante == 1 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
+            if (event.clientY < ymeio + 10 && quadrante == 2) {
+                quadrante = 1.5;
+            }
+            if (event.clientY < ymeio - 10 && quadrante == 1.5) {
+                quadrante = 1;
+                saiuDoInit = 1;
+            }
+            if (event.clientX < xmeio + 10 && quadrante == 1) {
+                quadrante = 4.5;
+            }
+            if (event.clientX < xmeio - 10 && quadrante == 4.5) {
+                quadrante = 4;
+            }
+            if (event.clientY > ymeio - 10 && quadrante == 4) {
+                quadrante = 3.5;
+                // saiuDoInit = 1;
+            }
+            if (event.clientY > ymeio + 10 && quadrante == 3.5) {
+                quadrante = 3;
+                saiuDoInit = 1;
+            }
+            if (quadrante == 4 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
                 EndGame("direção errada ");
             }
-            if (quadrante == 2 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
+            if (quadrante == 3 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
                 EndGame("direção errada ");
             }
-            if (quadrante == 3 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
+            if (quadrante == 2 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
                 EndGame("direção errada ");
             }
-            if (quadrante == 4 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
+            if (quadrante == 1 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
                 EndGame("direção errada ");
             }
         }
     };
     function demorou() {
-        if (estoura > 750) {
+        let tempoAtual = new Date();
+        tempoAtual = tempoAtual.getTime()
+        if (tempoAtual - estoura > 5000) {
             EndGame("demorou muito");
+        }
+    }
+    function NaoCirculo(p) {
+        if (p < 35) {
+            EndGame("TEM CERTEZA QUE ISSO É UM CIRCULO?");
         }
     }
     function muitoPerto() {
@@ -309,19 +317,14 @@ document.addEventListener('DOMContentLoaded', function () {
             var bestScore = document.getElementById('bestScore');
             titulo.style.transition = 'transform 0.3s ease-out';
             titulo.style.transform = 'scale(0)';
-            estoura++;
             // Cria um elemento de linha
             calculaPontos();
 
             var pontosAtuais = pontos.innerHTML;
-            if (pontosAtuais < 35) {
-                EndGame("TEM CERTEZA QUE ISSO É UM CIRCULO?");
 
-                return;
-            }
-
-
-            if (quadrante == quadranteInit && saiuDoInit == 1 && estoura > 100 && quadrante != 0) {
+            let tempoAtual = new Date();
+            tempoAtual = tempoAtual.getTime()
+            if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - estoura > 250 && quadrante != 0) {
                 if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
                     best = (parseFloat(pontos.innerHTML)).toFixed(2);
                     bestScore.style.visibility = "visible";
@@ -342,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             quadrantes();
+            NaoCirculo(pontosAtuais);
             demorou();
             muitoPerto();
             fazPontosDaLinha();
