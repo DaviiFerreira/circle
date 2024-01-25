@@ -68,6 +68,10 @@ document.addEventListener('DOMContentLoaded', function () {
         posSeg = true;
         bestScore.style.visibility = "hidden";
         saiuDoInit = 0;
+        if (posInit) {
+            xInicial = event.clientX;
+            yInicial = event.clientY;
+        }
         while (posicoesMouse.length) {
             posicoesMouse.shift();
         }
@@ -75,16 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
         estoura = estoura.getTime()
         horario = 0;
         quadrante = 0;
-        /*if (event.clientX < xmeio) {
-            sentido = "antihorario"
-            horario = -1;
-
-        }
-        if (event.clientX >= xmeio) {
-            sentido = "horario"
-            horario = 1;
-
-        }*/
         titulo.innerHTML = " Clique Para Iniciar!<br /> desenhe no sentido " + sentido;
         titulo.style.transition = 'transform 0.3s ease-in';
         titulo.style.transform = 'scale(1)';
@@ -144,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-
+        console.log(horario, quadrante, ySeg, yInicial);
         //horario init
 
 
@@ -305,7 +299,6 @@ document.addEventListener('DOMContentLoaded', function () {
             iniciado = true; // Começa a desenhar
             circuloCentral.style.transition = 'transform 0.3s ease-out';
             circuloCentral.style.transform = 'scale(0.5)';
-
             GameStart();
 
         }
