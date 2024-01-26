@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var xSeg = 0;
     var ySeg = 0;
     var posSeg = true;
-    var estoura = new Date();
-    estoura = estoura.getTime()
+    var tempoInit = new Date();
+    tempoInit = tempoInit.getTime()
     var horario = 0;
     var quadrante = 0;
     var dezEmDez = 0;
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var saiuDoInit = 0;
     var best = 0;
     var pontosPerdidos = 0;
+    var passouPorQtsQuadrantes = 0;
     function calculaPontos() {
         posicoesMouse.push((((event.clientX - xmeio) ** 2) + ((event.clientY - ymeio + 3) ** 2)) ** 0.5);
         if (posicoesMouse.length > 100) {
@@ -75,8 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
         while (posicoesMouse.length) {
             posicoesMouse.shift();
         }
-        estoura = new Date();
-        estoura = estoura.getTime()
+        tempoInit = new Date();
+        tempoInit = tempoInit.getTime()
         horario = 0;
         quadrante = 0;
         titulo.innerHTML = " Clique Para Iniciar!<br /> desenhe no sentido " + sentido;
@@ -90,6 +91,12 @@ document.addEventListener('DOMContentLoaded', function () {
         desenhando = false;
     }
     function quadrantes() {
+        if (posicoesMouse.length >= 10 && dezEmDez >= 10) {
+            xSeg = event.clientX;
+            ySeg = event.clientY;
+            dezEmDez = 0;
+        }
+        dezEmDez++;
         if (posicoesMouse.length > 10 && posSeg) {
 
             if (xmeio < xInicial && ymeio > yInicial) {
@@ -174,18 +181,19 @@ document.addEventListener('DOMContentLoaded', function () {
             if (event.clientX > xmeio + 10 && quadrante == 4.5) {
                 quadrante = 1;
                 saiuDoInit = 1;
-                if (quadrante == 1 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 2 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 3 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
-                if (quadrante == 4 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
-                    EndGame("direção errada ");
-                }
+
+            }
+            if (quadrante == 1 && (event.clientX + 25 < xSeg || event.clientY + 25 < ySeg) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 2 && (event.clientX > xSeg + 25 || event.clientY + 25 < ySeg) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 3 && (event.clientX > xSeg + 25 || event.clientY > ySeg + 25) && posSeg == false) {
+                EndGame("direção errada ");
+            }
+            if (quadrante == 4 && (event.clientX + 25 < xSeg || event.clientY > ySeg + 25) && posSeg == false) {
+                EndGame("direção errada ");
             }
         }
         if (horario == -1) {
@@ -235,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function demorou() {
         let tempoAtual = new Date();
         tempoAtual = tempoAtual.getTime()
-        if (tempoAtual - estoura > 5000) {
+        if (tempoAtual - tempoInit > 5000) {
             EndGame("demorou muito");
         }
     }
@@ -273,8 +281,10 @@ document.addEventListener('DOMContentLoaded', function () {
         trails.appendChild(trail);
     }
     function pontosFinal() {
+        let tempoAtual = new Date();
+        tempoAtual = tempoAtual.getTime()
         var bestScore = document.getElementById('bestScore');
-        if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - estoura > 250 && quadrante != 0 && ((event.clientX <= xInicial + 10 && event.clientX >= xInicial - 10) || (event.clientY >= yInicial - 10 && event.clientY <= yInicial + 10))) {
+        if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - tempoInit > 250 && quadrante != 0 && ((event.clientX <= xInicial + 10 && event.clientX >= xInicial - 10) || (event.clientY >= yInicial - 10 && event.clientY <= yInicial + 10))) {
             if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
                 best = (parseFloat(pontos.innerHTML)).toFixed(2);
                 bestScore.style.visibility = "visible";
@@ -324,21 +334,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var pontosAtuais = pontos.innerHTML;
 
-            let tempoAtual = new Date();
-            tempoAtual = tempoAtual.getTime()
-
-            if (posicoesMouse.length >= 10 && dezEmDez >= 10) {
-                xSeg = event.clientX;
-                ySeg = event.clientY;
-                dezEmDez = 0;
-            }
             pontosFinal();
+
+
+
             quadrantes();
             NaoCirculo(pontosAtuais);
             demorou();
             muitoPerto();
             fazPontosDaLinha();
-            dezEmDez++;
+
 
         }
     });
