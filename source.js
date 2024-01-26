@@ -272,6 +272,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         trails.appendChild(trail);
     }
+    function pontosFinal() {
+        var bestScore = document.getElementById('bestScore');
+        if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - estoura > 250 && quadrante != 0 && ((event.clientX <= xInicial + 10 && event.clientX >= xInicial - 10) || (event.clientY >= yInicial - 10 && event.clientY <= yInicial + 10))) {
+            if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
+                best = (parseFloat(pontos.innerHTML)).toFixed(2);
+                bestScore.style.visibility = "visible";
+                bestScore.innerHTML = "parabens novo recorde"
+            }
+            if ((parseFloat(pontos.innerHTML)).toFixed(2) < best) {
+                bestScore.style.visibility = "visible";
+                bestScore.innerHTML = "seu recorde é " + best;
+            }
+            EndGame("sua pontuação final foi " + (parseFloat(pontos.innerHTML)).toFixed(2));
+
+
+        }
+    }
     fundo.addEventListener('mousedown', function (event) {
 
         if (event.button === 0 && iniciado) {
@@ -299,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fundo.addEventListener('mousemove', function (event) {
         // Verifica se o botão esquerdo do mouse está pressionado
         if (desenhando) {
-            var bestScore = document.getElementById('bestScore');
+
             titulo.style.transition = 'transform 0.3s ease-out';
             titulo.style.transform = 'scale(0)';
             // Cria um elemento de linha
@@ -309,26 +326,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let tempoAtual = new Date();
             tempoAtual = tempoAtual.getTime()
-            if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - estoura > 250 && quadrante != 0 && ((event.clientX <= xInicial + 10 && event.clientX >= xInicial - 10) || (event.clientY >= yInicial - 10 && event.clientY <= yInicial + 10))) {
-                if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
-                    best = (parseFloat(pontos.innerHTML)).toFixed(2);
-                    bestScore.style.visibility = "visible";
-                    bestScore.innerHTML = "parabens novo recorde"
-                }
-                if ((parseFloat(pontos.innerHTML)).toFixed(2) <= best) {
-                    bestScore.style.visibility = "visible";
-                    bestScore.innerHTML = "seu recorde é " + best;
-                }
-                EndGame("sua pontuação final foi " + (parseFloat(pontos.innerHTML)).toFixed(2));
 
-
-            }
             if (posicoesMouse.length >= 10 && dezEmDez >= 10) {
                 xSeg = event.clientX;
                 ySeg = event.clientY;
                 dezEmDez = 0;
             }
-
+            pontosFinal();
             quadrantes();
             NaoCirculo(pontosAtuais);
             demorou();
