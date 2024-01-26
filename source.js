@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         desenhando = false;
     }
     function quadrantes() {
-        if (posicoesMouse.length >= 10 && posSeg) {
+        if (posicoesMouse.length > 10 && posSeg) {
 
             if (xmeio < xInicial && ymeio > yInicial) {
                 quadrante = 1;
@@ -139,15 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         console.log(horario, quadrante, ySeg, yInicial);
-        //horario init
 
-
-        //horario fim 
-
-
-        //antihorario init
-
-        //antihorario fim
         if (horario == 1) {
 
             if (event.clientY > ymeio - 10 && quadrante == 1) {
@@ -317,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let tempoAtual = new Date();
             tempoAtual = tempoAtual.getTime()
-            if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - estoura > 250 && quadrante != 0) {
+            if (quadrante == quadranteInit && saiuDoInit == 1 && tempoAtual - estoura > 250 && quadrante != 0 && ((event.clientX <= xInicial + 10 && event.clientX >= xInicial - 10) || (event.clientY >= yInicial - 10 && event.clientY <= yInicial + 10))) {
                 if ((parseFloat(pontos.innerHTML)).toFixed(2) > best) {
                     best = (parseFloat(pontos.innerHTML)).toFixed(2);
                     bestScore.style.visibility = "visible";
